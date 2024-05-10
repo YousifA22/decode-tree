@@ -1,0 +1,27 @@
+def decode(message_file):
+
+    number_word_map = {}
+    with open(message_file, 'r') as file:
+        for line in file:
+            number, word = line.split(maxsplit=1)
+            number_word_map[int(number)] = word.strip()
+    
+    # Determine which numbers correspond to the words at the end of each pyramid line
+    key_numbers = []
+    current_step = 1
+    total_numbers = 0
+
+    # Calculate the numbers based on the pyramid structure
+    while total_numbers + current_step <= max(number_word_map.keys()):
+        total_numbers += current_step
+        key_numbers.append(total_numbers)
+        current_step += 1
+
+ 
+    words_to_use = [number_word_map[number] for number in key_numbers if number in number_word_map]
+
+   
+    return ' '.join(words_to_use)
+
+print(decode('messages.txt'))
+
